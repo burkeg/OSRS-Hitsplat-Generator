@@ -74,10 +74,11 @@ class Snakeling:
     def gen_image(self):
         snakeling = Image.open(f'resources/Pet_snakeling.png').convert('RGBA')
         number = HitsplatNumber(self.val).image
-        number = scale(number, 2)
-        final = Image.new('RGBA', (snakeling.width + number.width, snakeling.height), (255, 0, 0, 0))
+        number = scale(number, 3)
+        spacing = 5
+        final = Image.new('RGBA', (snakeling.width + number.width + spacing, snakeling.height), (255, 0, 0, 0))
         final.paste(snakeling, (0, 0))
-        final.paste(number, (19, 7), number)
+        final.paste(number, (snakeling.width + spacing, 7), number)
         return final
 
 
@@ -131,11 +132,11 @@ class Phase:
 
     def create_attack_images(self):
         if self.num_attack > 0:
-            attack_data = scale(FullHitsplat(self.num_attack, Background('normal')).image, 2)
+            attack_data = scale(FullHitsplat(self.num_attack, Background('normal')).image, 3)
         else:
             attack_data = Image.new('RGBA', (1, 1), (255, 0, 0, 0))
         if self.num_venom > 0:
-            venom_data = scale(FullHitsplat(self.num_venom, Background('venom')).image, 2)
+            venom_data = scale(FullHitsplat(self.num_venom, Background('venom')).image, 3)
         else:
             venom_data = Image.new('RGBA', (1, 1), (255, 0, 0, 0))
         if self.num_snakeling > 0:
@@ -143,10 +144,10 @@ class Phase:
         else:
             snakeling_data = Image.new('RGBA', (1, 1), (255, 0, 0, 0))
 
-        attack_data_height_offset = 250
+        attack_data_height_offset = 230
         attack_data_width_center = 130
-        attack_data_width_spacing = 75
-        snakeling_height_offset = attack_data_height_offset + 7
+        attack_data_width_spacing = 90
+        snakeling_height_offset = attack_data_height_offset + 14
         attack_images = dict()
         for image_type, image in self.images.items():
             assert isinstance(image, Image.Image)
